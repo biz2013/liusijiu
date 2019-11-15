@@ -1,0 +1,23 @@
+div.number_block{
+    width: 22px;
+    height: 22px;
+    text-align: center;
+    border: 1px solid green;
+    display: inline-block;
+    margin: 3px;
+}
+div.number_block a:link {
+        text-decoration: none;
+    }
+div.number_block a:visited {
+        text-decoration: none;
+    }
+div.number_block a:hover {
+        text-decoration: none;
+    }
+div.number_block a:active {
+        text-decoration: none;
+    }
+
+}
+
