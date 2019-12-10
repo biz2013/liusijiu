@@ -1,6 +1,7 @@
 var current_selected = [];
 var selection_prefix_text = '您选择的号码: ';
 var balance_title = '您的余额: ';
+var winning_title = '您的奖金: ';
 var userId = '11010';
 var mybets = [];
 
@@ -9,7 +10,7 @@ function get_user_info(uId) {
         "userId": "11111",
         "alias": "张涛",
         "balance": 1000.0,
-        "winning": 0,
+        "winning": 200,
         "credit": 0,
         "bets": [
             { "id": 45, "selection": [1, 5, 7, 11, 34, 35], "submit_time": 1582837529 },
@@ -18,8 +19,35 @@ function get_user_info(uId) {
     };
 }
 
+function makebet(sessionId, username, bets) {
+    var payload = { "userId": username, "bets": [] }
+    bets.forEach(bet => payload.bets.push(bet));
+    $.ajax({
+        type: "post",
+        data: payload,
+        url: "/api/v1/game/bet/",
+        contentType: 'application/json; charset=utf-8',
+        success: function(json, status, jqXHR) {
+            var response = JSON.parse(json);
+            if (!response.state) {
+                $("#errorTitle").text("登陆错误");
+                $("#errorBody").text(response.msg);
+                $("#errorMessage").modal({ backdrop: "static" });
+                return;
+            } else {
+                refresh_page();
+            }
+        },
+        error: function(json, status, jqXHR) {
+            alert("redeem failed " + json.responseText);
+        }
+    });
+
+}
+
 function show_balance(userInfo) {
     $("#balance").text(balance_title + userInfo.balance);
+    $("#winning").text(winning_title + userInfo.winning);
 }
 
 function display_current_selection() {
@@ -72,10 +100,15 @@ function display_selected_number(num, highlight) {
         $("#block" + num + ' a').css('color', '#0066CC');;
     }
 }
-$(document).ready(function() {
+
+function refresh_page() {
     userInfo = get_user_info();
     show_balance(userInfo);
     show_next_draw_info(get_next_draw_info());
     display_current_selection();
     show_mybets(userInfo.bets)
+
+}
+$(document).ready(function() {
+    refresh_page();
 });

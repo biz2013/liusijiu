@@ -13,15 +13,23 @@
 <body>
 <div class="container">
 <div class="row">
-    <div id="balance"></div>
+    <div id="balance"></div> 
 </div>
+<div class="row">
+    <div id="winning"></div> 
+</div>
+<div class="row">
+    <button type="button" class="btn btn-primary">充值</button>
+    <button type="button" class="btn btn-primary">提现</button>
+</div>
+
 <div class="row">
     <div id="nextdraw"></div>
     <!--<div id="prize"></div>-->
 </div>
 <div class="row">
     <div id="selection"></div>
-    <button type="button" class="btn btn-primary">下注（¥1）</button>
+    <button type="button" id="btn_bet" class="btn btn-primary">下注（¥1）</button>
     <button type="button" class="btn btn-default">清除当前选择</button>
 </div>
 <div class="row">
@@ -97,6 +105,10 @@
         <tbody></tbody>
     </table>
 </div>
+    <!-- End Message Modal -->
+    <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/include/inc_popup_msgbox.php'; ?>
+    <div id="wait" style="display:none;width:64px;height:64px; position:absolute;top:50%;left:50%;padding:2px;">
+         <img src='/static/images/Loading_blue.gif' width="50" height="50" /><br>处理中</div>
 </div>
 </body>
 </html>

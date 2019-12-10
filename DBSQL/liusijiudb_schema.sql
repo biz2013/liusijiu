@@ -46,15 +46,41 @@ DROP TABLE IF EXISTS `game`;
 
 CREATE TABLE `game` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `name` varchar(64) DEFAULT '',
+  `name` varchar(64) NOT NULL DEFAULT '',
   `bet_close_before_draw_in_min` int(10) NOT NULL DEFAULT '10' COMMENT '开奖前多少分钟停止下注',
   `prize_config` varchar(1024) NOT NULL DEFAULT '{}',
   `balance` decimal(12,2) NOT NULL DEFAULT '0.00',
+  `prize_pool` decimal(12,2) NOT NULL DEFAULT '0.00',
+  `userIP` varchar(32) NOT NULL DEFAULT '127.0.0.1',
   `createdat` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedat` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='游戏设置';
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name_unique` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='游戏设置';
 
+
+
+# Dump of table gamedraw
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `gamedraw`;
+
+CREATE TABLE `gamedraw` (
+  `draw_id` varchar(64) NOT NULL COMMENT '每次开盘的ID',
+  `game_id` int(10) unsigned NOT NULL COMMENT '游戏的ID',
+  `draw_time` datetime NOT NULL COMMENT '下次开奖时间',
+  `status` enum('NotStarted','Open','BetClose','Drawn','Closed','Distributed') NOT NULL COMMENT '开奖状态',
+  `draw_result` varchar(256) NOT NULL DEFAULT '{}',
+  `total_income` decimal(12,2) NOT NULL DEFAULT '0.00',
+  `total_prize_pool` decimal(12,2) NOT NULL DEFAULT '0.00',
+  `distributed` decimal(12,2) NOT NULL DEFAULT '0.00',
+  `remain_prize` decimal(12,2) NOT NULL DEFAULT '0.00',
+  `createdat` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updatedat` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`draw_id`, `game_id`),
+  KEY `game_id_ind` (`game_id`),
+  CONSTRAINT `gamedraw_ibfk_1` FOREIGN KEY (`game_id`) REFERENCES `game` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='游戏开盘';
 
 
 # Dump of table gamebet
@@ -64,7 +90,7 @@ DROP TABLE IF EXISTS `gamebet`;
 
 CREATE TABLE `gamebet` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `game_draw_id` int(10) unsigned NOT NULL,
+  `game_draw_id` varchar(64) NOT NULL COMMENT '每次开盘的ID',
   `username` varchar(32) NOT NULL COMMENT '玩家的用户名',
   `bet` varchar(256) NOT NULL DEFAULT '',
   `bet_amount` decimal(12,2) NOT NULL DEFAULT '1.00',
@@ -79,33 +105,9 @@ CREATE TABLE `gamebet` (
   PRIMARY KEY (`id`),
   KEY `game_draw_id_ind` (`game_draw_id`),
   KEY `username_ind` (`username`),
-  CONSTRAINT `gamebet_ibfk_1` FOREIGN KEY (`game_draw_id`) REFERENCES `gamedraw` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `gamebet_ibfk_1` FOREIGN KEY (`game_draw_id`) REFERENCES `gamedraw` (`draw_id`) ON DELETE CASCADE,
   CONSTRAINT `gamebet_ibfk_2` FOREIGN KEY (`username`) REFERENCES `h_member` (`h_userName`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='游戏下注';
-
-
-
-# Dump of table gamedraw
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `gamedraw`;
-
-CREATE TABLE `gamedraw` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `game_id` int(10) unsigned NOT NULL COMMENT '游戏的ID',
-  `draw_time` datetime NOT NULL COMMENT '下次开奖时间',
-  `status` enum('NotStarted','Open','BetClose','Drawn','Closed','Distributed') NOT NULL COMMENT '开奖状态',
-  `draw_result` varchar(256) NOT NULL DEFAULT '{}',
-  `total_income` decimal(12,2) NOT NULL DEFAULT '0.00',
-  `total_prize_pool` decimal(12,2) NOT NULL DEFAULT '0.00',
-  `distributed` decimal(12,2) NOT NULL DEFAULT '0.00',
-  `remain_prize` decimal(12,2) NOT NULL DEFAULT '0.00',
-  `createdat` datetime DEFAULT CURRENT_TIMESTAMP,
-  `updatedat` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `game_id_ind` (`game_id`),
-  CONSTRAINT `gamedraw_ibfk_1` FOREIGN KEY (`game_id`) REFERENCES `game` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='游戏开盘';
 
 
 
@@ -290,6 +292,7 @@ CREATE TABLE `h_config` (
   `h_is_test_mode` int(11) NOT NULL DEFAULT '0' COMMENT '是否是测试阶段',
   `h_proxy_api_key` varchar(256) DEFAULT NULL COMMENT '支付网关系统的API KEY',
   `h_proxy_api_secret` varchar(256) DEFAULT NULL COMMENT '支付网关系统的API KEY',
+  `h_next_649_draw_id` varhcar(16) DEFAULT NULL COMMENT '下一个开盘ID，YYYYMMDD0649',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -801,6 +804,18 @@ CREATE TABLE `t_log_login_member` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+
+create view user_and_parents as
+select p.id as parent3Id, p.h_userName as parent3Username, p.h_point2 as parent3Balance, 
+       s3.parent2Id, s3.parent2Username, s3.parent2Balance,
+       s3.parent1Id, s3.parent1Username, s3.parent1Balance,
+       s3.userId, s3.username, s3.balance from h_member as p right join
+(select p.id as parent2Id, p.h_userName as parent2Username, p.h_parentUserName as level2_parent_username, p.h_point2 as parent2Balance, 
+       s2.parent1Id, s2.parent1Username, s2.parent1Balance,
+       s2.userId, s2.username, s2.balance from h_member as p right join
+(select p.id as parent1Id, p.h_userName as parent1Username, p.h_parentUsername as level1_parent_username, p.h_point2 as parent1Balance, s.id as userId, s.h_userName as username, s.balance from h_member as p right join
+(select id, h_userName, h_parentUsername, h_point2 as balance from h_member) as s on p.h_userName = s.h_parentUsername) as s2 on p.h_userName = s2.level1_parent_username) as s3 
+ on p.`h_userName` = s3.level2_parent_username
 
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
