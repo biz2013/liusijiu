@@ -1,0 +1,116 @@
+body{ font-family:"微软雅黑"; width:100%;}
+.yshong{ color:#F00;}
+
+
+.log .tit{ text-align:center; padding-top:30px; padding-bottom:10px;}
+.log .xlogin{ max-width:374px;background:url(../images/tm30.png);}
+.log .xlogin2{ padding:30px 40px 30px 0px;}
+.log .xlogin2 .lo1{ text-align:center; font-size:20px; font-weight:600; padding-bottom:20px; color:#333;}
+.log .tit{}
+.loimg{ width:100%; max-width:100px;}
+.log .xlogin2 .lo{ padding-left:30px;}
+.log .xlogin2 .lo2{ font-size:16px; line-height:2em; font-weight:500; color:#333; padding-top:20px;}
+.log .xlogin2 .lo3{ line-height:2em;  color:#333; padding-bottom:10px; }
+.log .xlogin2 .lo4{ line-height:1px; height:1px; margin-left:30px;border-bottom:#666 dashed 1px;}
+.log .xlogin2 .lo5{ line-height:2em;  color:#333; padding-top:10px; }
+
+.reg .tit{ text-align:center; padding-top:30px; padding-bottom:10px;}
+.reg .xlogin{ max-width:374px;background:url(../images/tm30.png);}
+.reg .xlogin2{ padding:30px 40px 30px 0px;}
+.reg .xlogin2 .lo1{ text-align:center; font-size:20px; font-weight:600; padding-bottom:20px; color:#333;}
+.reg .tit{}
+.loimg{ width:100%; max-width:100px;}
+.reg .xlogin2 .lo{ padding-left:30px;}
+.reg .xlogin2 .lo2{ font-size:16px; line-height:2em; font-weight:500; color:#333; padding-top:20px;}
+.reg .xlogin2 .lo3{ line-height:2em;  color:#333; padding-bottom:10px; }
+.reg .xlogin2 .lo4{ line-height:1px; height:1px; margin-left:30px;border-bottom:#666 dashed 1px; margin-bottom:10px;}
+.reg .xlogin2 .lo5{ line-height:2em;  color:#333;  }
+
+.top{ background:#88190C; height:115px;}
+.top .logo{color:#FFF; float:left; padding-top:20px; padding-left:10px;}
+.top .logo h4{ padding-top:3px; padding-left:10px; font-weight:bold;}
+.top .an{  float:right; padding-top:34px; margin-right:10px;}
+.top .an .btn-long{ background:#e15d0d; border-radius:5; border:#FFF solid 1px; color:#fff; }
+.top .an .btn-group{}
+.top .an .btn-long:hover{background:#4965e1;color:#fff;}
+.top .an .btn-long:focus{background:#4965e1;color:#fff;}
+.top .user-menu{ width:180px; min-width:180px;}
+
+.top .xx-menu{ }
+
+.top .biaoqian1{ background:#E02222;}
+.top .an .btn-long2{ color:#fff; }
+.top .an .btn-long2:hover{background:#4965e1;color:#fff;}
+.top .an .btn-long2:focus{background:#4965e1;color:#fff;}
+
+.main{ background:#444}
+
+.remain{padding:0px 15px 0px 15px; overflow:auto;background:url(../images/index_bg.png) no-repeat}
+.remain .gao1{ width:100%; height:2px; line-height:2px;}
+.remain .long-header{ margin:0;}
+.remain .long-header small{ font-size:16px;}
+
+.remain .breadcrumb{ background:#EEEEEE;}
+.remain .breadcrumb a{ color:#666666;}
+
+.remain .shuxing{ display:inline-block;}
+.remain .getneirong{ padding-left:0em;}
+
+.long_table{ width:100%;}
+.long_table td{padding-top:8px; padding-bottom:8px; border-bottom:#DDDDDD solid 1px;}
+
+
+
+
+.long_table .tb_top td{ background:#F5F5F5; padding-top:10px; padding-bottom:10px;}
+.long_table .tb_bottom td{padding-top:20px; padding-bottom:20px; padding-right:20px;}
+
+.zijitable{width:100%; border-top:#DDDDDD solid 1px; border-left:#DDDDDD solid 1px;}
+.zijitable td{ border-bottom:#DDDDDD solid 1px; border-right:#DDDDDD solid 1px; padding:16px 10px 16px 10px;}
+
+
+.form-long-w1{ max-width:400px;}
+.pt1{ padding-top:7px;}
+
+.picupkuang{width:250px; height:70px;}
+
+.res-img{ width:100%; height:auto; }
+
+
+.i_m{ width:100%; padding:0 10px; margin-top:10px;}
+.i_m li{ width:25%; float:left; margin-bottom:10px; text-align:center;list-style-type:none;
+}
+.i_m li a{ display:block; width:100%; padding:10px 0; color:#FFF;}
+.i_m li a img{height:60px; vertical-align:top;}
+.i_m li a h2{ width:100%; height:30px; line-height:30px; font-size:15px; font-weight:normal;}
+.i_m li.i_m1 a{ background:url(../images/topwz_bg.png) no-repeat;}
+.i_m li.i_m2 a{ background:url(../images/topwz_bg.png) no-repeat;}
+.i_m li.i_m3 a{ background:url(../images/topwz_bg.png) no-repeat;}
+.i_m li.i_m4 a{ background:url(../images/topwz_bg.png) no-repeat;}
+.i_ma{ width:100%; padding:0 10px;}
+
+
+
+/*Users=============================*/
+.utp{}
+
+
+
+.main .left{ width:100%; }
+.main .countgo{ width:100%;}
+.main .countgo .zt{background:#FFF; width:100%}
+
+
+.log .xlogin2{ padding:30px 20px 30px 20px;}
+.log .xlogin2 .lo4{margin-left:0px;}	
+.log .xlogin2 .lo{ padding-left:0px;}	
+.reg .xlogin2{ padding:30px 20px 30px 20px;}
+.reg .xlogin2 .lo4{margin-left:0px;}
+.reg .xlogin2 .lo{ padding-left:0px;}
+
+
+.clear{clear:both;height:0px;font-size:0px;overflow: hidden;line-height:0px;}
+
+.youjian {
+    color: #337ab7;
+}

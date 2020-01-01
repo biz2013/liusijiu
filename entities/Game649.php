@@ -27,7 +27,7 @@ class Game649 extends GameDefinition
         return $count;
     }
 
-    private function distribute4matches($db, $userIds_matched_4) {
+    private function distribute4matches($db, $userIds_matched, ) {
 
     }
 
@@ -43,8 +43,38 @@ class Game649 extends GameDefinition
 
     }
 
-    private function distributeCommission($db, $userIds, $total_distribution) {
+    private function distributeFixReward($db, $count, $reward) {
+        $sql = "select * from current_match_bet where match=" . $count;
+        error_log("Game649::distributeFixReward(): " . $sql);
+        $rs = $db->query($sql);
+        while($list = $db->fetch_array($result))
+        {
+            $sql = "update h_member set reward = reward + " . ($reward * $list['match_count']);
+            $sql = $sql . " where h_username='" . $list['username'] . "'";
+            error_log("Game649::distributeFixReward: " . $sql);
+            $db->query($sql);
+            //TODO: add logger record
+        }
+    }
 
+    private function distributeReward($db, $count, $total_reward_pool) {
+        $sql = "select sum(match_count) as total_winner from current_match_bet where match=" . $count;
+        error_log("Game649::distributeFixReward(): " . $sql);
+        $rs = $db->query($sql);
+        $total_winner = $rs['total_winner'];
+
+        $sql = "select * from current_match_bet where match=" . $count;
+        error_log("Game649::distributeFixReward(): " . $sql);
+        $rs = $db->query($sql);
+        while($list = $db->fetch_array($result))
+        {
+            $reward = ($total_reward_pool * $list['match_count']) / $total_winner;
+            $sql = "update h_member set reward = reward + " . $reward ;
+            $sql = $sql . " where h_username='" . $list['username'] . "'";
+            error_log("Game649::distributeFixReward: " . $sql);
+            $db->query($sql);
+            //TODO: add logger record
+        }
     }
 
     public function draw($db, $draw)
@@ -75,22 +105,40 @@ class Game649 extends GameDefinition
 
         foreach($rs_list as $key=>$val) {
             $bet = json_encode(val['bet']);
+            $betId = val['id'];
             $match = $this->match($draw_number, $bet);
-            if ($match>=3) {
-                array_push($winner[strval($match)], $bet->id);
+            if ($match > 0) {
+                $sql = "update gamebet set match=" . $match . " where id=" . $betId;
+                error_log("Game649::draw(): " . $sql);
+                // handle error ?
+                $db->quer($sql);
             }
-            $count = $count + 1;
         }
-        
-        $count_3 = sizeof($winers["3"]);
-        $count_4 = sizeof($winers["4"]);
-        $count_5 = sizeof($winers["5"]);
-        $count_6 = sizeof($winers["6"]);
+
+        $sql = "select count(id) as match3 from gaembet where game_draw_id='" . $this->current_draw->id  . "' and match=3";
+        error_log("Game649::draw(): " . $sql);
+        $rs = $db->query($sql);
+        $count_3 = $rs['match3'];
+
+        $sql = "select count(id) as match4 from gaembet where game_draw_id='" . $this->current_draw->id  . "' and match=4";
+        error_log("Game649::draw(): " . $sql);
+        $rs = $db->query($sql);
+        $count_3 = $rs['match4'];
+
+        $sql = "select count(id) as match5 from gaembet where game_draw_id='" . $this->current_draw->id  . "' and match=5";
+        error_log("Game649::draw(): " . $sql);
+        $rs = $db->query($sql);
+        $count_5 = $rs['match5'];
+
+        $sql = "select count(id) as match6 from gaembet where game_draw_id='" . $this->current_draw->id  . "' and match=6";
+        error_log("Game649::draw(): " . $sql);
+        $rs = $db->query($sql);
+        $count_6 = $rs['match6'];
 
         $distribution_pool = $count * 0.6;
         $this->balance = $this->balance + $count - $distribution_pool;
         $this->prize_pool = $this->prize_pool + $distribution_pool;
-        $distribute_3 = $count_3 * 10;
+        $distribute_3 = $count_3 * 10.0;
         if ($this->prize_pool < $distribute_3) {
             error_log("Game649::draw() match 3 wining of " . $distribute_3 . " is more than the pool of " . $this->prize_pool);
             $this->prize_pool = 0;
@@ -102,10 +150,15 @@ class Game649 extends GameDefinition
         $distribution_5 = ($count_5 > 0) ? $this->prize_prize * 0.08 : 0.0;
         $distribution_6 = ($count_6 > 0) ? $this->prize_prize * 0.8 : 0.0;
         $this->prize_pool = $this->prize_pool - $distribution_4 - $distribution_5 - $distribution_6;
-        distribute4matches($db, $winers["4"], $distribution_4);
-        distribute4matches($db, $winers["5"], $distribution_5);
-        distribute4matches($db, $winers["6"], $distribution_6);
 
+        distributeFixReward($db, 3, 10.0);
+        distributeReward($db, 4, $distribution_4);
+        distributeReward($db, 5, $distribution_5);
+        distributeReward($db, 6, $distribution_6);
+
+        $sql = "update game set balance=" . $balance . ", prize_pool=" . $prize_pool . " where id=" . $this->id;
+        error_log("Game649::draw() " . $sql);
+        $db->query($sql);
     }
 
     public function bet($user, $draw_id, $bets, $action)

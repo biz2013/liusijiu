@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             http_response_code(404);
             echo('更新开盘记录:' . $draw->id . "不存在或者已经被更新了");
         } else {
-            if ($request->status == 'DRAW') {
+            if ($request->status == 'Drawn') {
                $game->draw($db); 
             }
             $resp = new \stdClass();

@@ -818,6 +818,14 @@ select p.id as parent3Id, p.h_userName as parent3Username, p.h_point2 as parent3
  on p.`h_userName` = s3.level2_parent_username
 
 
+create view current_match_bets as
+select b.username, count(b.`match`) as match_count, b.`match` from 
+(select * from gamebet where `match`>=3 and status='COMMITTED') as b 
+inner join 
+(select * from gamedraw where status='Drawn') as d 
+on b.game_draw_id=d.draw_id
+group by b.username, b.`match`
+
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
