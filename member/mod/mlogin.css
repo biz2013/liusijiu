@@ -1,0 +1,64 @@
+ body {
+            background: url("images/mlogin/login_bg.jpg") no-repeat center top !important;
+            align-content: center;
+  }
+
+        .form-div {
+            align-content: center;
+            background: url(images/mlogin/l_background.png) no-repeat;
+            background-size: 100% 100%;
+            width: 100%;
+            height: 350px;
+            margin-top: 85px;
+     
+        }
+
+        .text {
+            background: url(images/mlogin/l_textbox_l.png) no-repeat;
+            background-size: 100% 100%;
+            width: 65%;
+            height: 36px;
+            outline: none;
+            padding-left: 10px;
+            padding-right: 10px;
+            font-size: 20px;
+            border: none;
+            margin-left: 15%;
+            margin-top: 10px;
+        }
+
+        .text-v {
+            background: url(images/mlogin/l_textbox_l.png) no-repeat;
+            background-size: 100% 100%;
+            width: 40%;
+            height: 36px;
+            outline: none;
+            padding-left: 10px;
+            padding-right: 10px;
+            font-size: 20px;
+            border: none;
+            float: left
+        }
+        .box_relative
+        {
+            width: 80%;
+            text-align:center;
+            margin-right: auto;
+             margin-left: auto; 
+             margin-top:5px;
+             font-size:18px;
+             font-weight:bold;
+        }
+        .btn
+        {
+            background: url(./images/popbtn.png) no-repeat; 
+            background-size: 100% 100%;
+            width: 40%;
+            height: 40px;
+            border: none;
+            margin-left: 30%;
+            margin-top:15px;
+            color: tomato;
+            font-size: 16px;
+            font-weight: bold;
+        }
