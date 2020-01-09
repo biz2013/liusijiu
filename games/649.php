@@ -105,6 +105,9 @@
         <tbody></tbody>
     </table>
 </div>
+<div class="row">
+   <div><a href="/member/tuiguang.php">推广</div>
+</div>
     <!-- End Message Modal -->
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/include/inc_popup_msgbox.php'; ?>
     <div id="wait" style="display:none;width:64px;height:64px; position:absolute;top:50%;left:50%;padding:2px;">

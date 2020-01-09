@@ -1,12 +1,10 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/include/conn.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/include/webConfig.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/include/inc_header.php';
 
 $pageTitle = '推广海报—';
 
-require_once 'inc_header.php';
-?>
-<?php
 $sql = "select *";
 $sql .= ",(select count(id) from `h_member` where h_parentUserName = a.h_userName and h_isPass = 1) as comMembers";
 $sql .= ",(select sum(h_price) from `h_log_point2` where h_userName = a.h_userName and h_price > 0) as point2sum";
@@ -37,5 +35,5 @@ $rs = $db->get_one($sql);
 </div>
 
 <?php
-require_once 'inc_footer.php';
+//require_once 'inc_footer.php';
 ?>
