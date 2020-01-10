@@ -2,12 +2,13 @@
 	$url = empty($_REQUEST['url'])?"":$_REQUEST['url'];
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/include/phpqrcode/phpqrcode.php';
 	
-	$img = md5($url) . ".png";
+	$img = md5($url) . "png";
 	
-	$file = "../images/ewm/$img";
-	$bg = "../images/ewm_tg1.png";
+	$file = $_SERVER['DOCUMENT_ROOT'] . '/images/ewm/' . $img;
+	$bg = $_SERVER['DOCUMENT_ROOT'] . '/images/ewm_tg1.png';
 	QRcode::png($url,$file,5,20);
-	
+	error_log("save QRcode to " . $img);
+
 	$imgs = array(
 			'dst' => $bg,
 			'src' =>$file
