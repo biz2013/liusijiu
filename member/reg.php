@@ -126,7 +126,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/member/logged_data.php';
   <div class="col-sm-4"><button type="submit" class="btn btn-primary form-control reggo">注册</button></div>
   </div> 
  <div class="lo4"></div>
- <div class="lo lo5">已经注册的有账户? <a href="/member/login.php" style=" color:#FFFF00">立即登录</a></div>
+ <div class="lo lo5">已经注册的有账户? <a href="/users/login.php" style=" color:#FFFF00">立即登录</a></div>
 </div> 
 </div>   
     
@@ -263,7 +263,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/member/logged_data.php';
 				return false;
 				}				
 
-			var url="/member/bin.php?act=reg&comMember="+encodeURI(comMember)+"&username="+encodeURI(username)+"&pwd="+encodeURI(pwd)+"&pwd2="+encodeURI(pwd2)+"&pwdII="+encodeURI(pwdII)+"&pwdII2="+encodeURI(pwdII2)+"&vCode="+encodeURI(vCode);
+			var url="/users/register.php?act=reg&comMember="+encodeURI(comMember)+"&username="+encodeURI(username)+"&pwd="+encodeURI(pwd)+"&pwd2="+encodeURI(pwd2)+"&pwdII="+encodeURI(pwdII)+"&pwdII2="+encodeURI(pwdII2)+"&vCode="+encodeURI(vCode);
 			tishi2();
 			$.ajax({ type : "get", async:true,  url : url, dataType : "json",
 				success: function(json){
@@ -271,7 +271,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/member/logged_data.php';
 					if(json.state == true){
 						layer.alert(json.msg,function(){
 							//跳转
-							window.location.href = '/member/login.php';
+							window.location.href = '/users/login.php';
 						});
 						
 					} else {
