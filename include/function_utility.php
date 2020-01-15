@@ -370,7 +370,10 @@ function isMoveTel($mobilephone)
 //取地址栏值
 function GetUrl($action)
 {
-	$fullUrl = 'http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER["SERVER_PORT"] . $_SERVER["REQUEST_URI"];
+        $serverName = $_SERVER['SERVER_NAME'];
+        $proto = (!strcmp($serverName, "localhost"))? 'http://' : 'https://';
+
+	$fullUrl = $proto . $_SERVER['SERVER_NAME'] . ':' . $_SERVER["SERVER_PORT"] . $_SERVER["REQUEST_URI"];
 	$parseurlinfo = parse_url($fullUrl);//Array ( [scheme] => http [host] => 127.0.0.1 [port] => 8080 [path] => /web/main.php [query] => a=1&b=2 )
 	$pathinfo = pathinfo(basename($fullUrl));//Array ( [dirname] => . [basename] => main.php?a=1&b=2 [extension] => php?a=1&b=2 [filename] => main )
         
@@ -387,7 +390,7 @@ function GetUrl($action)
                         }
 			else
 			{
-				return 'http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER["SERVER_PORT"];
+				return $proto . $_SERVER['SERVER_NAME'] . ':' . $_SERVER["SERVER_PORT"];
 			}
 		case 2:
 			//赋文件名
