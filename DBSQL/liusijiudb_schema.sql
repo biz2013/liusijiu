@@ -293,6 +293,7 @@ CREATE TABLE `h_config` (
   `h_proxy_api_key` varchar(256) DEFAULT NULL COMMENT '支付网关系统的API KEY',
   `h_proxy_api_secret` varchar(256) DEFAULT NULL COMMENT '支付网关系统的API KEY',
   `h_next_649_draw_id` varhcar(16) DEFAULT NULL COMMENT '下一个开盘ID，YYYYMMDD0649',
+  `h_default_paypal_client_id` varchar(128) DEFAULT NULL COMMENT '目前卖家的信息',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

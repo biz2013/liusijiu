@@ -109,9 +109,10 @@ UNLOCK TABLES;
 # Dump of table game
 # ------------------------------------------------------------
 
-INSERT INTO `game` (`id`, `name`, `bet_close_before_draw_in_min`, `prize_config`, `balance`, `prize_pool`, `createdat`, `updatedat`)
+INSERT INTO `game` (`id`, `name`, `bet_close_before_draw_in_min`, `prize_config`, `balance`, `prize_pool`, `createdat`, `updatedat`, `h_default_paypal_client_id`)
 VALUES
-	(1,'649',10,'{  \"match_rules\": [\n       {   \"match_count\" :  2, \"reward_type\": \"fixed\", \"reward\": 1 },      \n       {   \"match_count\" :  3, \"reward_type\": \"fixed\", \"reward\": 10 },\n       {   \"match_count\" :  4, \"reward_type\": \"ratio\", \"reward\" :  0.08},\n       {   \"match_count\" :  5, \"reward_type\": \"ratio\", \"reward\" :  0.12},\n       {   \"match_count\" :  6, \"reward_type\": \"ratio\", \"reward\" :  0.4},\n   ]\n}',0.00,0.0,'2019-12-05 20:55:17','2019-12-05 20:55:17');
+	(1,'649',10,'{  \"match_rules\": [\n       {   \"match_count\" :  2, \"reward_type\": \"fixed\", \"reward\": 1 },      \n       {   \"match_count\" :  3, \"reward_type\": \"fixed\", \"reward\": 10 },\n       {   \"match_count\" :  4, \"reward_type\": \"ratio\", \"reward\" :  0.08},\n       {   \"match_count\" :  5, \"reward_type\": \"ratio\", \"reward\" :  0.12},\n       {   \"match_count\" :  6, \"reward_type\": \"ratio\", \"reward\" :  0.4},\n   ]\n}',0.00,0.0,'2019-12-05 20:55:17','2019-12-05 20:55:17',
+	 '');
 
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;

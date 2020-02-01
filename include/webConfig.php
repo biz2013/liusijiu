@@ -8,4 +8,9 @@ $rewriteOpen = $webInfo['h_rewriteOpen'];
 //模板编号，/templets/web/ 目录下
 $templetsFolder = 'a001';
 $templetsSite = 'xxx.com';
+
+//System constants
+$DEFAULT_PAYPAL_CLIENT_ID= $webInfo['h_default_paypal_client_id'];
+$APIKEY = $webInfo['h_tradeex_api_key'];
+$SECRETKEY = $webInfo['h_tradeex_api_secret'];
 ?>

@@ -19,8 +19,8 @@
     <div id="winning"></div> 
 </div>
 <div class="row">
-    <button type="button" class="btn btn-primary">充值</button>
-    <button type="button" class="btn btn-primary">提现</button>
+    <button id="btn_cz" type="button" class="btn btn-primary">充值</button>
+    <button id="btn_tx" type="button" class="btn btn-primary">提现</button>
 </div>
 
 <div class="row">

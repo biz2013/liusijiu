@@ -111,4 +111,9 @@ function refresh_page() {
 }
 $(document).ready(function() {
     refresh_page();
+
+    $("#btn_cz").one('click', function(event) {
+        event.preventDefault();
+        window.location.href = '/payment/game_cz.php';
+    });
 });
