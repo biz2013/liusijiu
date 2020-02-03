@@ -26,12 +26,7 @@ class pay{
 	
 	/* 申请充值 */
 	public function applypurchase($biz_content=array(), $payment_method='weixin'){
-		if (FCBPayConfig::INTESTMODE){
-			$api =  FCBPayConfig::DEVSITE . '/api/v1/applypurchase/';
-		}else{
-			$api =  FCBPayConfig::PRODSITE . '/api/v1/applypurchase/';
-		}
-        
+        $api = $TRADESITE_URL . '/api/v1/applypurchase/';
 		$this->SetValue('method',FCBPayConfig::PAYAPPLYMETHOD);
 		$biz_content['api_account_type'] = 'Account';
 		$biz_content['payment_provider'] = $payment_method;
@@ -54,11 +49,7 @@ class pay{
 	
 	/* 提现 */
 	public function applyredeem($biz_content=array()){
-		if (FCBPayConfig::INTESTMODE){
-			$api = FCBPayConfig::DEVSITE . '/api/v1/applyredeem/';
-		}else{
-			$api = FCBPayConfig::PRODSITE . '/api/v1/applyredeem/';
-		}
+        $api = $TRADESITE_URL . '/api/v1/applypurchase/';
 		$this->SetValue('method', FCBPayConfig::REDEEMMETHOD);
 		$biz_content['api_account_type'] = 'Account';
 		$biz_content['payment_provider'] = 'heepay';

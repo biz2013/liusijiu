@@ -294,6 +294,9 @@ CREATE TABLE `h_config` (
   `h_proxy_api_secret` varchar(256) DEFAULT NULL COMMENT '支付网关系统的API KEY',
   `h_next_649_draw_id` varhcar(16) DEFAULT NULL COMMENT '下一个开盘ID，YYYYMMDD0649',
   `h_default_paypal_client_id` varchar(128) DEFAULT NULL COMMENT '目前卖家的信息',
+  `h_tradeex_site_url` varchar(128) DEFAULT NULL COMMENT '场外交易网站URL',
+  `h_notify_url` varchar(128) DEFAULT NULL COMMENT '充值异步通知URL',
+  `h_return_url` varchar(128) DEFAULT NULL COMMENT '充值跳转URL'
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

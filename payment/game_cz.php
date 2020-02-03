@@ -45,37 +45,21 @@ function show_paypal_window(amount) {
 
 paypal.Buttons({
   createOrder: function (data, actions) {
-
-    //var units = $("#id_quantity").val();
-    //var units_val = parseFloat(units);
-    //var unit_price = parseFloat($("#id_unit_price").val());
-    var units_val = 100;
-    var unit_price = 0.1;
-    var total_amount = (units_val * unit_price).toFixed(2);
-
-    var data = new FormData();
-    data.append('csrfmiddlewaretoken', '{{ csrf_token }}');
-    data.append('reference_order_id', '{{ reference_order_id }}');
-    data.append('quantity', '1');
-    data.append('unit_price', '0.1');
-
-    // TODO: read payment_provider from user selection 
-    data.append('seller_payment_provider', 'paypal');
-
-    // TODO: Check currency
-    data.append('unit_price_currency', 'CAD');
-    data.append('crypto', 'AXF');
-    data.append('total_amount', total_amount);
-
-    return fetch('/payment/game_cz.php?amount=' + cz_amount, {
+    // directly call local api to relay the purchase request
+    // to original payment system
+    return fetch('/payment/game_cz.php', {
       method: 'POST',
-      body: data,
-      credentials: 'same-origin',
+      body: JSON.stringify({
+        sessionId: "TBD",
+        username: "<?php echo $memberLogged_userName; ?>",
+        amount: cz_amount
+      })
     }).then(function(res) {
-      return throw_if_fetch_error(res);
+      return throw_if_fetch_error(res)
     }).then(function(res) {
         return res.json();
     }).then(function(data) {
+        //console.log(JSON.stringify(data))
         return data.orderID;
     }).catch(error => {
       console.log(error);
@@ -85,7 +69,7 @@ paypal.Buttons({
 
   onApprove: function (data, actions) {
     return actions.order.capture().then(function (details) {
-      return fetch('/trading/paypal/confirm_payment/', {
+      return fetch('<?php echo $TRADESITE_URL; ?>/trading/paypal/confirm_payment/', {
         method: 'post',
         body: JSON.stringify({
           orderID: data.orderID,
