@@ -47,7 +47,7 @@ paypal.Buttons({
   createOrder: function (data, actions) {
     // directly call local api to relay the purchase request
     // to original payment system
-    return fetch('/payment/game_cz.php', {
+    return fetch('/api/v1/pay/cz.php', {
       method: 'POST',
       body: JSON.stringify({
         sessionId: "TBD",

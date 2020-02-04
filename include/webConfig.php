@@ -13,7 +13,7 @@ $templetsSite = 'xxx.com';
 $DEFAULT_PAYPAL_CLIENT_ID= $webInfo['h_default_paypal_client_id'];
 $APIKEY = $webInfo['h_tradeex_api_key'];
 $SECRETKEY = $webInfo['h_tradeex_api_secret'];
-$TRADESITE_URL=$webInfo['h_tradexsite_url'];
+$TRADESITE_URL=$webInfo['h_tradeex_site_url'];
 $TRADE_NOTIFY_URL=$webInfo['h_notify_url'];
 $TRADE_RETURN_URL=$webInfo['h_return_url'];
 ?>

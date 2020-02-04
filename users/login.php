@@ -55,7 +55,7 @@
                     }
                 },
                 error: function(json, status, jqXHR) {
-                    alert("redeem failed " + json.responseText);
+                    alert("login failed " + json.responseText);
                 }
             });            
         });

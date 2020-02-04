@@ -2,6 +2,8 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . '/include/conn.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/include/webConfig.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/include/api_util.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/include/pay/pay.php';
+
 require_once $_SERVER['DOCUMENT_ROOT'] . '/member/logged_data.php';
 
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
@@ -9,10 +11,11 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 }
 
 $json = file_get_contents('php://input');
-$data = json_decode($json);
+error_log("cz.php: receive input " . $json);
+$data = json_decode($json, true);
 $total_fee = $data['amount']*100;
 $username = $data['username'];
-$pay = new pay($api_key, $api_secret, $tradesite);
+$pay = new pay($APIKEY, $SECRETKEY, $TRADESITE_URL);
 $out_trade_no = date('YmdHis').rand(100000,999999);
 $notify_url = $TRADE_NOTIFY_URL;
 $return_url = $TRADE_RETURN_URL;
@@ -20,7 +23,7 @@ $config['notify_url'] = $notify_url;
 $config['return_url'] = $return_url;
 
 $config['out_trade_no'] = $out_trade_no;
-$config['subject'] = '游戏网站客户' . $username . '请求充值' . $amount . '加元';
+$config['subject'] = '游戏网站客户' . $username . '请求充值' . $data['amount'] . '加元';
 $config['total_fee'] = $total_fee;
 $config['attach'] = 'username=' . $username;
 

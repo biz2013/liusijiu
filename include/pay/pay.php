@@ -10,8 +10,9 @@ class pay{
 		'charset'			=>	'utf-8',
 		'sign_type'			=> 'MD5',
     );
-    protected $api_key =  FCBPayConfig::APIKEY;
-    protected $secret_key =  FCBPayConfig::SECRETKEY;
+    protected $api_key =  '';
+    protected $secret_key =  '';
+    protected $api_url = '';
     protected $debug_info = array();
     protected $IsTest = false;
 	 
@@ -19,14 +20,17 @@ class pay{
      * 类架构函数
      * Auth constructor.
      */
-    public function __construct(){
+    public function __construct($app_api_key, $app_api_secret, $api_site_url){
+        $this->api_key = $app_api_key;
+        $this->secret_key = $app_api_secret;
+        $this->api_url = $api_site_url;
 		$this->SetValue('api_key',$this->api_key);
 		$this->SetValue('timestamp',date('YmdHis'));
     }
 	
 	/* 申请充值 */
 	public function applypurchase($biz_content=array(), $payment_method='weixin'){
-        $api = $TRADESITE_URL . '/api/v1/applypurchase/';
+        $api = $this->api_url . '/api/v1/applypurchase/';
 		$this->SetValue('method',FCBPayConfig::PAYAPPLYMETHOD);
 		$biz_content['api_account_type'] = 'Account';
 		$biz_content['payment_provider'] = $payment_method;
@@ -49,7 +53,7 @@ class pay{
 	
 	/* 提现 */
 	public function applyredeem($biz_content=array()){
-        $api = $TRADESITE_URL . '/api/v1/applypurchase/';
+        $api = $this->api_url . '/api/v1/applypurchase/';
 		$this->SetValue('method', FCBPayConfig::REDEEMMETHOD);
 		$biz_content['api_account_type'] = 'Account';
 		$biz_content['payment_provider'] = 'heepay';
