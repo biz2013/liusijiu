@@ -13,7 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 $json = file_get_contents('php://input');
 error_log("cz.php: receive input " . $json);
 $data = json_decode($json, true);
-$total_fee = $data['amount']*100;
+$amount = $data['amount'];
+$total_fee = $amount * 100;
 $username = $data['username'];
 $pay = new pay($APIKEY, $SECRETKEY, $TRADESITE_URL);
 $out_trade_no = date('YmdHis').rand(100000,999999);
@@ -24,8 +25,11 @@ $config['return_url'] = $return_url;
 
 $config['out_trade_no'] = $out_trade_no;
 $config['subject'] = '游戏网站客户' . $username . '请求充值' . $data['amount'] . '加元';
+$subject = $config['subject'];
 $config['total_fee'] = $total_fee;
 $config['attach'] = 'username=' . $username;
+
+error_log("setup return_url:" . $return_url);
 
 try {
     $data  = $pay->applypurchase($config, 'paypal');
@@ -56,7 +60,7 @@ try {
         $sql .= "username = '" . $username . "', ";
         $sql .= "out_trade_no = '{$out_trade_no}', ";
         $sql .= "subject = '{$subject}', ";
-        $sql .= "total_fee = " . $amount . ", ";
+        $sql .= "total_fee = " . $total_fee . ", ";
         $sql .= "trx_bill_no = '" . $trx_bill_no . "',";
         $sql .= "submit_time = '" . date('Y-m-d H:i:s') . "', ";
         $sql .= "ip = '" . getUserIP() . "' ";
@@ -86,7 +90,7 @@ try {
     $resp = new \stdClass();
     $resp->orderID = $data['orderID'];
     $resp->api_out_trade_no = $data['api_out_trade_no'];
-    $resp->api_out_trade_no = $data['api_trans_id'];
+    $resp->api_trans_id = $data['api_trans_id'];
     header('Content-Type: application/json');
     echo json_encode($resp);
 
