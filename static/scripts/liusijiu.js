@@ -25,17 +25,21 @@ function makebet(sessionId, username, bets) {
     $.ajax({
         type: "post",
         data: payload,
-        url: "/api/v1/game/bet/",
+        url: "/api/v1/649/bet/",
         contentType: 'application/json; charset=utf-8',
         success: function(json, status, jqXHR) {
-            var response = JSON.parse(json);
-            if (!response.state) {
-                $("#errorTitle").text("登陆错误");
-                $("#errorBody").text(response.msg);
-                $("#errorMessage").modal({ backdrop: "static" });
-                return;
-            } else {
-                refresh_page();
+            try {
+                var response = JSON.parse(json);
+                if (!response.state) {
+                    $("#errorTitle").text("登陆错误");
+                    $("#errorBody").text(response.msg);
+                    $("#errorMessage").modal({ backdrop: "static" });
+                    return;
+                } else {
+                    refresh_page();
+                }
+            } catch (e) {
+                console.log(`[Exception ${e.name}: ${e.message}`);
             }
         },
         error: function(json, status, jqXHR) {
@@ -116,4 +120,9 @@ $(document).ready(function() {
         event.preventDefault();
         window.location.href = '/payment/game_cz.php';
     });
+
+    $("#btn_bet").one('click', function(event) {
+        event.preventDefault();
+        makebet(psid, uid, mybets);
+    })
 });

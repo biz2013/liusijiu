@@ -27,7 +27,7 @@ class Game649 extends GameDefinition
         return $count;
     }
 
-    private function distribute4matches($db, $userIds_matched, ) {
+    private function distribute4matches($db, $userIds_matched) {
 
     }
 

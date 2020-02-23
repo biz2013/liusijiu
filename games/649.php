@@ -1,3 +1,8 @@
+<?php
+require_once $_SERVER['DOCUMENT_ROOT'] . '/member/logged_data.php';
+
+session_start();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +14,10 @@
 <script type="text/javascript" src="/static/scripts/liusijiu.js"></script>
 <link rel="stylesheet" href="/static/css/bootstrap.3.3.7.min.css">
 <link rel="stylesheet" href="/static/css/liusijiu.css">
-
+<script language="javascript">
+var psid="<?php echo session_id(); ?>";
+var uid="<?php echo $memberLogged_userName; ?>";
+</script>
 <body>
 <div class="container">
 <div class="row">

@@ -1,7 +1,7 @@
 <?php
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/include/mysql.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/game/GameException.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/games/GameException.php';
 
 class GameDraw {
     public $id;
