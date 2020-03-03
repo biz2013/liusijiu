@@ -39,7 +39,7 @@ class GameDraw {
     }
 
     public function getCurrentDraw($db, $gameId) {
-        $sql = "select draw_id, game_id, name, draw_time, draw_result, lastupdatedat from gamedraw inner join game on gamedraw.game_id=game.id where game_id=" . $gameId . " and status <> 'Closed'";
+        $sql = "select gamedraw.draw_id, gamedraw.game_id, game.name, gamedraw.draw_time, gamedraw.draw_result, gamedraw.updatedat from gamedraw inner join game on gamedraw.game_id=game.id where gamedraw.game_id='" . $gameId . "' and gamedraw.status <> 'Closed'";
         error_log("GameDraw::getCurrentDraw(" . $gameId . ": " . $sql);
         $rs = $db->query($sql);
         if (!$rs) {

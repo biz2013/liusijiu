@@ -43,7 +43,7 @@ function makebet(sessionId, username, bets) {
             }
         },
         error: function(json, status, jqXHR) {
-            alert("redeem failed " + json.responseText);
+            console.log("redeem failed " + json.responseText);
         }
     });
 
@@ -117,12 +117,12 @@ $(document).ready(function() {
     refresh_page();
 
     $("#btn_cz").one('click', function(event) {
-        event.preventDefault();
         window.location.href = '/payment/game_cz.php';
     });
 
     $("#btn_bet").one('click', function(event) {
         event.preventDefault();
         makebet(psid, uid, mybets);
+        $(this).on(event);
     })
 });

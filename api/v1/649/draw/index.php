@@ -1,5 +1,6 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/entities/GameDraw.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/entities/Game649.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     session_start();

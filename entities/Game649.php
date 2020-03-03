@@ -1,5 +1,5 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/include/mysql.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/include/conn.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/entities/GameDefinition.php';
 
 class Game649 extends GameDefinition
@@ -7,8 +7,8 @@ class Game649 extends GameDefinition
     public $current_draw;
     public $next_draw;
 
-    public static function getGame($db) {
-        return GameDefinition::getGame($db, '649');
+    public function getGame($db) {
+        GameDefinition::loadGame($db, '649');
     }
 
     private function match($draw, $bet) {
